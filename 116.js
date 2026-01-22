@@ -1,52 +1,13 @@
-/* =====================================================
-   CART DATA
-   ===================================================== */
-let cart = JSON.parse(localStorage.getItem("fitfuel_cart")) || [];
+/* ================= GLOBAL CART ================= */
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-/* =====================================================
-   UPDATE CART COUNT (Navbar icon)
-   ===================================================== */
-function updateCartCount() {
-  let count = 0;
-  for (let i = 0; i < cart.length; i++) {
-    count += cart[i].qty;
-  }
-  let el = document.getElementById("cart-count");
-  if (el) el.innerText = count;
-}
-updateCartCount();
-
-/* =====================================================
-   ADD TO CART FUNCTION
-   ===================================================== */
-function addToCart(name, price) {
-  let found = false;
-
-  for (let i = 0; i < cart.length; i++) {
-    if (cart[i].name === name) {
-      cart[i].qty += 1;
-      found = true;
-      break;
-    }
-  }
-
-  if (!found) {
-    cart.push({ name: name, price: price, qty: 1 });
-  }
-
-  localStorage.setItem("fitfuel_cart", JSON.stringify(cart));
-  updateCartCount();
-}
-
-/* =====================================================
-   NAVIGATION FUNCTIONS
-   ===================================================== */
-function goToCart() {
-  window.location.href = "116_cart.html";
-}
-
+/* ================= NAVIGATION ================= */
 function goToMenu() {
   window.location.href = "116_menu.html";
+}
+
+function goToCart() {
+  window.location.href = "116_cart.html";
 }
 
 function goToCheckout() {
@@ -57,116 +18,161 @@ function goToCalculator() {
   window.location.href = "116_calories.html";
 }
 
-/* =====================================================
-   LOAD CART PAGE CONTENT
-   ===================================================== */
-function loadCartPage() {
-  let tbody = document.getElementById("cart-items");
-  let totalEl = document.getElementById("cart-total");
+/* ================= CART FUNCTIONS ================= */
+function addToCart(name, price) {
+  let item = cart.find(p => p.name === name);
 
-  if (!tbody) return;
-
-  tbody.innerHTML = "";
-  let total = 0;
-
-  for (let i = 0; i < cart.length; i++) {
-    let row = document.createElement("tr");
-
-    row.innerHTML =
-      "<td>" + cart[i].name + "</td>" +
-      "<td>₹" + cart[i].price + "</td>" +
-      "<td>" + cart[i].qty + "</td>" +
-      "<td><button onclick='removeItem(" + i + ")'>X</button></td>";
-
-    tbody.appendChild(row);
-    total += cart[i].price * cart[i].qty;
+  if (item) {
+    item.qty++;
+  } else {
+    cart.push({ name, price, qty: 1 });
   }
 
-  totalEl.innerText = total;
-}
-loadCartPage();
-
-/* =====================================================
-   REMOVE ITEM FROM CART
-   ===================================================== */
-function removeItem(index) {
-  cart.splice(index, 1);
-  localStorage.setItem("fitfuel_cart", JSON.stringify(cart));
-  loadCartPage();
+  localStorage.setItem("cart", JSON.stringify(cart));
+  showToast("Item added to cart");
   updateCartCount();
 }
 
-/* =====================================================
-   CHECKOUT FUNCTION
-   ===================================================== */
+function updateCartCount() {
+  let count = cart.reduce((sum, item) => sum + item.qty, 0);
+  let el = document.getElementById("cart-count");
+  if (el) el.innerText = count;
+}
+
+/* ================= LOAD CART (Q6 INCLUDED) ================= */
+function loadCart() {
+  let tbody = document.getElementById("cart-items");
+  if (!tbody) return;
+
+  tbody.innerHTML = "";
+  let subtotal = 0;
+
+  cart.forEach((item, index) => {
+    subtotal += item.price * item.qty;
+
+    let row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${item.name}</td>
+      <td>₹${item.price}</td>
+      <td>${item.qty}</td>
+      <td><button onclick="removeItem(${index})">X</button></td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  let discount = 0;
+  if (subtotal > 1000) {
+    discount = subtotal * 0.10;
+  }
+
+  let finalTotal = subtotal - discount;
+
+  let subEl = document.getElementById("cart-subtotal");
+  let disEl = document.getElementById("cart-discount");
+  let totalEl = document.getElementById("cart-total");
+
+  if (subEl) subEl.innerText = subtotal.toFixed(2);
+  if (disEl) disEl.innerText = discount.toFixed(2);
+  if (totalEl) totalEl.innerText = finalTotal.toFixed(2);
+}
+
+function removeItem(index) {
+  cart.splice(index, 1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  loadCart();
+  updateCartCount();
+}
+
+/* ================= CHECKOUT ================= */
 function placeOrder() {
   alert("Order placed successfully!");
-  localStorage.removeItem("fitfuel_cart");
+  localStorage.removeItem("cart");
   window.location.href = "116_feedback.html";
 }
 
-/* =====================================================
-   FEEDBACK SUBMISSION (TXT FILE)
-   ===================================================== */
+/* ================= FEEDBACK VALIDATION (Q3) ================= */
 function submitFeedback() {
   let name = document.getElementById("fname").value;
   let mobile = document.getElementById("mobile").value;
+  let email = document.getElementById("email").value;
   let feedback = document.getElementById("feedback").value;
-  let rating = document.getElementById("rating").value;
 
-  if (!/^[0-9]{10}$/.test(mobile)) {
+  let mobilePattern = /^\d{10}$/;
+  let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!mobilePattern.test(mobile)) {
     alert("Enter valid 10-digit mobile number");
     return false;
   }
 
-  let data =
+  if (!emailPattern.test(email)) {
+    alert("Enter valid email address");
+    return false;
+  }
+
+  /* ===== Save feedback to text file (Client-side Q7) ===== */
+  let content =
     "Name: " + name + "\n" +
     "Mobile: " + mobile + "\n" +
-    "Rating: " + rating + "/5\n" +
+    "Email: " + email + "\n" +
     "Feedback: " + feedback;
 
-  let blob = new Blob([data], { type: "text/plain" });
+  let blob = new Blob([content], { type: "text/plain" });
   let link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
   link.download = "feedback.txt";
   link.click();
 
   document.getElementById("msg").innerText =
-    "Thank you for your valuable feedback!";
+    "Thank you for your feedback!";
   return false;
 }
 
+/* ================= CLEAR FORM (Q4) ================= */
 function clearFeedback() {
   document.getElementById("feedbackForm").reset();
-  document.getElementById("msg").innerText = "";
+  document.getElementById("msg").innerText =
+    "Form cleared successfully";
 }
 
-/* =====================================================
-   CALORIE CALCULATOR
-   ===================================================== */
+/* ================= HIDE / SHOW ================= */
+function hideSection(id) {
+  document.getElementById(id).style.display = "none";
+}
+
+function showSection(id) {
+  document.getElementById(id).style.display = "block";
+}
+
+/* ================= CALORIE CALCULATOR ================= */
 function calculateCalories() {
-  let w = document.getElementById("weight").value;
-  let h = document.getElementById("height").value;
-  let a = document.getElementById("age").value;
+  let weight = document.getElementById("weight").value;
+  let height = document.getElementById("height").value;
+  let age = document.getElementById("age").value;
 
-  let calories = (10 * w) + (6.25 * h) - (5 * a) + 5;
+  if (!weight || !height || !age) {
+    alert("Please enter all values");
+    return;
+  }
+
+  let calories = 10 * weight + 6.25 * height - 5 * age + 5;
   document.getElementById("calorie-result").innerText =
-    "Your daily calorie need is approx " + calories + " kcal";
+    "Your maintenance calories: " + calories + " kcal/day";
 }
 
-/* =====================================================
-   HIDE & SHOW CONTENT 
-   ===================================================== */
-function hideSection(sectionId) {
-  let el = document.getElementById(sectionId);
-  if (el) {
-    el.style.display = "none";
-  }
+/* ================= TOAST ================= */
+function showToast(message) {
+  let toast = document.getElementById("toast");
+  if (!toast) return;
+
+  toast.innerText = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2000);
 }
 
-function showSection(sectionId) {
-  let el = document.getElementById(sectionId);
-  if (el) {
-    el.style.display = "block";
-  }
-}
+/* ================= INIT ================= */
+updateCartCount();
+loadCart();

@@ -16,7 +16,6 @@
   <h1>Your Cart</h1>
 </section>
 
-<!-- Cart table populated using JavaScript -->
 <table class="cart-table">
   <thead>
     <tr>
@@ -30,8 +29,13 @@
 </table>
 
 <div class="cart-summary">
-  <h2>Total: ₹<span id="cart-total">0</span></h2>
-  <button class="big-btn" onclick="goToCheckout()">Proceed to Checkout</button>
+  <h3>Subtotal: ₹<span id="cart-subtotal">0</span></h3>
+  <h3>Discount (10%): ₹<span id="cart-discount">0</span></h3>
+  <h2>Final Total: ₹<span id="cart-total">0</span></h2>
+
+  <button class="big-btn" onclick="goToCheckout()">
+    Proceed to Checkout
+  </button>
 </div>
 
 <div id="toast"></div>
