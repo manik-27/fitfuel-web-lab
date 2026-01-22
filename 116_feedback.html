@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitFuel | Feedback</title>
+  <link rel="stylesheet" href="116.css">
+</head>
+<body>
+
+<header class="navbar">
+  <a href="116_home.html" class="logo">FitFuel</a>
+</header>
+
+<section class="hero">
+  <h1>Service Feedback</h1>
+  <p>Your feedback helps us improve</p>
+</section>
+
+<section class="checkout-box">
+  <!-- Feedback form -->
+  <form id="feedbackForm" onsubmit="return submitFeedback()">
+
+    <input type="text" id="fname" placeholder="Your Name" required>
+    <input type="text" id="mobile" placeholder="Mobile Number" required>
+
+    <textarea id="feedback" rows="4" placeholder="Your feedback"></textarea>
+
+    <!-- Star rating -->
+    <label><strong>Rate our service:</strong></label>
+    <select id="rating">
+      <option value="1">⭐</option>
+      <option value="2">⭐⭐</option>
+      <option value="3">⭐⭐⭐</option>
+      <option value="4">⭐⭐⭐⭐</option>
+      <option value="5">⭐⭐⭐⭐⭐</option>
+    </select>
+
+    <button type="submit">Submit Feedback</button>
+    <button type="button" onclick="clearFeedback()">Clear</button>
+  </form>
+
+  <p id="msg"></p>
+</section>
+
+<script src="116.js"></script>
+</body>
+</html>

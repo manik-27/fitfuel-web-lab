@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta & CSS -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitFuel | Order Food</title>
+  <link rel="stylesheet" href="116.css">
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<header class="navbar">
+  <!-- Logo redirects to home -->
+  <a href="116_home.html" class="logo">FitFuel</a>
+
+  <nav>
+    <a href="116_home.html">Home</a>
+    <a href="116_menu.html">Menu</a>
+  </nav>
+
+  <!-- Cart icon with dynamic count -->
+  <div class="cart-icon" onclick="goToCart()">
+    🛒 <span id="cart-count">0</span>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <h1>Order Healthy Food</h1>
+  <p>Nutritious meals curated for a fit lifestyle</p>
+</section>
+
+<!-- ================= PRODUCT GRID ================= -->
+<section class="products">
+
+  <!-- ROW 1 -->
+  <div class="product-card">
+    <img src="images/protein_bowl.jpg" alt="Protein Power Bowl">
+    <h3>Protein Power Bowl</h3>
+    <p>High-protein bowl with grilled veggies & quinoa</p>
+    <p class="cal">520 Calories</p>
+    <span>₹249</span>
+    <button onclick="addToCart('Protein Power Bowl',249)">Add to Cart</button>
+  </div>
+
+  <div class="product-card">
+    <img src="images/smooth.jpeg" alt="Green Detox Smoothie">
+    <h3>Green Detox Smoothie</h3>
+    <p>Spinach, apple & chia seeds blend</p>
+    <p class="cal">320 Calories</p>
+    <span>₹149</span>
+    <button onclick="addToCart('Green Detox Smoothie',149)">Add to Cart</button>
+  </div>
+
+  <div class="product-card">
+    <img src="images/salad.jpeg" alt="Veggie Salad Bowl">
+    <h3>Veggie Salad Bowl</h3>
+    <p>Fresh greens with olive oil dressing</p>
+    <p class="cal">280 Calories</p>
+    <span>₹199</span>
+    <button onclick="addToCart('Veggie Salad Bowl',199)">Add to Cart</button>
+  </div>
+
+  <!-- ROW 2 -->
+  <div class="product-card">
+    <img src="images/Avo.jpeg" alt="Avocado Toast">
+    <h3>Avocado Toast</h3>
+    <p>Whole grain toast with mashed avocado</p>
+    <p class="cal">220 Calories</p>
+    <span>₹129</span>
+    <button onclick="addToCart('Avocado Toast',129)">Add to Cart</button>
+  </div>
+
+  <div class="product-card">
+    <img src="images/chick.jpeg" alt="Grilled Chicken Meal">
+    <h3>Grilled Chicken Meal</h3>
+    <p>Lean chicken breast with steamed veggies</p>
+    <p class="cal">450 Calories</p>
+    <span>₹299</span>
+    <button onclick="addToCart('Grilled Chicken Meal',299)">Add to Cart</button>
+  </div>
+
+  <div class="product-card">
+    <img src="images/oats.jpeg" alt="Oats & Fruits Bowl">
+    <h3>Oats & Fruits Bowl</h3>
+    <p>Oats topped with seasonal fruits</p>
+    <p class="cal">350 Calories</p>
+    <span>₹179</span>
+    <button onclick="addToCart('Oats & Fruits Bowl',179)">Add to Cart</button>
+  </div>
+
+  <!-- ROW 3 -->
+  <div class="product-card">
+    <img src="images/protein.jpeg" alt="Protein Shake">
+    <h3>Protein Shake</h3>
+    <p>Whey protein with banana & milk</p>
+    <p class="cal">300 Calories</p>
+    <span>₹179</span>
+    <button onclick="addToCart('Protein Shake',179)">Add to Cart</button>
+  </div>
+
+  <div class="product-card">
+    <img src="images/wrap.jpeg" alt="Healthy Veg Wrap">
+    <h3>Healthy Veg Wrap</h3>
+    <p>Whole wheat wrap with mixed veggies</p>
+    <p class="cal">330 Calories</p>
+    <span>₹159</span>
+    <button onclick="addToCart('Healthy Veg Wrap',159)">Add to Cart</button>
+  </div>
+
+  <div class="product-card">
+    <img src="images/balls.jpeg" alt="Protein Energy Balls">
+    <h3>Protein Energy Balls</h3>
+    <p>Dates, nuts & protein-rich bites</p>
+    <p class="cal">180 Calories</p>
+    <span>₹99</span>
+    <button onclick="addToCart('Protein Energy Balls',99)">Add to Cart</button>
+  </div>
+
+</section>
+
+<!-- Toast notification -->
+<div id="toast"></div>
+
+<script src="116.js"></script>
+</body>
+</html>

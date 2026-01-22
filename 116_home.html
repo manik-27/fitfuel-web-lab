@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta information -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitFuel | Home</title>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="116.css">
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<header class="navbar">
+  <!-- Logo acts as Home button -->
+  <a href="116_home.html" class="logo">FitFuel</a>
+
+  <nav>
+    <a href="116_menu.html">Order Food</a>
+  </nav>
+
+  <!-- Cart icon with dynamic count -->
+  <div class="cart-icon" onclick="goToCart()">
+    🛒 <span id="cart-count">0</span>
+  </div>
+</header>
+
+<!-- ================= HERO SECTION ================= -->
+<section class="hero">
+  <h1>Fuel Your Body. Fuel Your Life.</h1>
+  <p>Healthy food, smart choices, better lifestyle</p>
+</section>
+
+<!-- ================= HOME BOXES ================= -->
+<section class="home-boxes">
+  <div class="home-box" onclick="goToCalculator()">
+    <h2>🔥 Calculate Maintenance Calories</h2>
+    <p>Know how much your body needs daily</p>
+  </div>
+
+  <div class="home-box" onclick="goToMenu()">
+    <h2>🍱 Order Healthy Food</h2>
+    <p>Bowls, smoothies & snacks for fitness</p>
+  </div>
+</section>
+
+
+<!-- ================= CONTACT / PROJECT DETAILS ================= -->
+<section class="contact-section">
+  <h2>Contact / Project Details</h2>
+
+  <div class="contact-card">
+    <p><strong>Name:</strong> Manik Gandhi</p>
+    <p><strong>USN:</strong> 1DS24CS116</p>
+    <p><strong>Email:</strong> manikgandhi80@gmail.com</p>
+    <p><strong>Project:</strong> FitFuel – Healthy Food Ordering Website</p>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  © 2025 FitFuel | Web Development Lab Project
+</footer>
+
+<!-- Toast notification container -->
+<div id="toast"></div>
+
+<!-- External JavaScript -->
+<script src="116.js"></script>
+
+</body>
+</html>
+
+<!-- ================= : HIDE / SHOW SECTION ================= -->
+<section style="text-align:center; margin:40px;">
+
+  <div id="offerSection">
+    <h2 style="color:#1abc9c;">Special Discount Offer</h2>
+    <p>Get 10% discount on orders above ₹1000</p>
+  </div>
+
+  <button onclick="hideSection('offerSection')" style="margin:10px;">
+    Hide Offer
+  </button>
+
+  <button onclick="showSection('offerSection')" style="margin:10px;">
+    Show Offer
+  </button>
+
+</section>
